@@ -1,0 +1,23 @@
+{
+  "name": "studyspot",
+  "version": "1.0.0",
+  "description": "react app for finding and sharing good study spots ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tillaine/studySpot.git"
+  },
+  "keywords": [
+    "react",
+    "miniapp"
+  ],
+  "author": "Bit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tillaine/studySpot/issues"
+  },
+  "homepage": "https://github.com/tillaine/studySpot#readme"
+}
