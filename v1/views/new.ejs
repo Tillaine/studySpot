@@ -1,0 +1,16 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <div class="row">
+        <div style="width: 30%; margin: 0, auto;"
+        <h1>Add a new Study Spot</h1>
+        <form action="/spots" method="POST">
+            <input class="form-control" type="text" name='name' placeholder="name">
+            <input class="form-control" type="text" name='image' placeholder="image url">
+            <button class="btn btn-block btn-lg btn-warning">Submit!</button>
+        </form>
+    </div>
+</div>
+
+
+<%- include("partials/footer") %>

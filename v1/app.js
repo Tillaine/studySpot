@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const bodyParser = require('body-parser')
 
+app.use(bodyParser.urlencoded({extende: true}));
 app.set("view engine", "ejs")
 
 app.get("/", (req, res) => {
     res.render("landing");
 });
+
 
 const spots = [
     {name: "Belmar Library", image: "https://cdn.pixabay.com/photo/2015/07/17/22/42/library-849797_1280.jpg"},
@@ -23,5 +26,19 @@ const spots = [
 app.get("/spots", (req, res) => {
  res.render('spots', { spots })
 } )
+
+
+app.post("/spots", (req, res) => {
+    const name = req.body.name
+    const image = req.body.image
+    var newSpot = {name, image}
+    spots.push(newSpot)
+    res.redirect('/spots')
+    //get data from 
+})
+
+app.get("/spots/new", (req, res) => {
+    res.render('new.ejs')
+});
 
 app.listen(process.env.PORT || port, () => console.log(`server running on ${port}`))
