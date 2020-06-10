@@ -36,7 +36,7 @@ const   express     = require('express'),
         
         
         
-        app.get("/index", (req, res) => {
+        app.get("/spots", (req, res) => {
             Spot.find((err, spots) => {
                 if (err) { console.log(err) }
                 else {
@@ -52,9 +52,9 @@ const   express     = require('express'),
             Spot.create(newSpot, (err, freshSpot) => {
                 if (err) { console.log(err) }
                 else { console.log(freshSpot)}
-                res.redirect('/index')
+                res.redirect('/spots')
             })
-            //get data from 
+         
         })
         
         app.get("/spots/new", (req, res) => {
@@ -67,8 +67,7 @@ const   express     = require('express'),
                 else { 
                     res.render("show", {spot})}
             })
-            //find spot with id 
-            //show details 
+           
             
         })
 
