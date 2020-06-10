@@ -1,0 +1,6 @@
+EJS has recently been updated to v3.0.1 and now uses the following syntax:
+
+<%- include("partials/header") %>
+<%- include("partials/footer") %>
+
+btn-lg
