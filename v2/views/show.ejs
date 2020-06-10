@@ -1,0 +1,12 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <h1 style="text-align: center;"><%= spot.name %></h1>
+    <div class="row">
+        <div style="width: 30%; margin: auto;">
+            <img width='300px' src="<%= spot.image %>">
+            <p> <%= spot.description %>  </p>
+        </div>
+    </div>
+</div>
+<%- include("partials/footer") %>
