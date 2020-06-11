@@ -6,6 +6,11 @@
         <div style="width: 30%; margin: auto;">
             <img width='300px' src="<%= spot.image %>">
             <p> <%= spot.description %>  </p>
+            <% spot.comments.forEach(comment => { %>
+                <p>
+                    <strong> <%= comment.author %> </strong> - <%= comment.text %>
+                </p>
+          <%  }) %>
         </div>
     </div>
 </div>

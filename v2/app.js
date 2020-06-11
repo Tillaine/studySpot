@@ -2,27 +2,23 @@ const   express     = require('express'),
         app         = express(),
         port        = 3000,
         bodyParser  = require('body-parser'),
-        mongoose    = require("mongoose");
+        mongoose    = require("mongoose"),
+        Spot        = require("./models/Spot");
+        seedDB      = require("./seed") 
 
-        
-        // ****************************
-        //          Database Connection 
-        // ****************************
-        mongoose.connect('mongodb://localhost:27017/spots', { poolSize: 100 });
-        const connection = mongoose.connection;
-        mongoose.set('useFindAndModify', false)
-        
-        let spotModel = new mongoose.Schema({
-            id: { type: Number, index: true },
-            name: String,
-            image: String,
-            description: String
-        });
-        
-        
-        let Spot = mongoose.model('spots', spotModel);
-        
-        
+    //seed database
+    
+    
+    // ****************************
+    //          Database Connection 
+    // ****************************
+    mongoose.connect('mongodb://localhost:27017/spots', { useNewUrlParser: true, useUnifiedTopology: true });
+    const connection = mongoose.connection;
+    mongoose.set('useFindAndModify', false)
+    // seedDB();
+    
+    
+    
         // ****************************
         //      Routes
         // ****************************
@@ -62,27 +58,16 @@ const   express     = require('express'),
         });
         
         app.get("/spots/:id", (req, res) => {
-            Spot.findById(req.params.id, (err, spot) => {
+            Spot.findById(req.params.id).populate("comments").exec((err, spot) => {
                 if (err) { console.log(err) }
                 else { 
                     res.render("show", {spot})}
             })
-           
-            
         })
-
 
 
         app.listen(process.env.PORT || port, () => console.log(`server running on ${port}`))
        
        
        
-        // ****************************
-        //         Temp Data
-                // ****************************
-        // const spots = [
-        //     {name: "Belmar Library", description: "Great place to focus. Chill vibe, lots of seating and fresh coffee",  image: "https://cdn.pixabay.com/photo/2015/07/17/22/42/library-849797_1280.jpg"},
-        //     {name: "Colfax Starbucks", description: "Great place to focus. Chill vibe, lots of seating and fresh coffee", image: "https://cdn.pixabay.com/photo/2017/08/06/04/09/people-2588594_1280.jpg"},
-        //     {name: "Auraria Library", description: "Great place to focus. Chill vibe, lots of seating and fresh coffee", image: "https://cdn.pixabay.com/photo/2017/07/31/11/21/people-2557396_1280.jpg"}
-        // ];
-    // 
+        
