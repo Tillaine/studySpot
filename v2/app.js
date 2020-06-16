@@ -4,9 +4,10 @@ const   express     = require('express'),
         bodyParser  = require('body-parser'),
         mongoose    = require("mongoose"),
         Spot        = require("./models/Spot");
+        Comment = require("./models/comment")
         seedDB      = require("./seed") 
 
-    //seed database
+    //seed database/
     
     
     // ****************************
@@ -36,7 +37,7 @@ const   express     = require('express'),
             Spot.find((err, spots) => {
                 if (err) { console.log(err) }
                 else {
-                    res.render('index', { spots })
+                    res.render('spots/index', { spots })
                 }
             })
         } )
@@ -54,16 +55,44 @@ const   express     = require('express'),
         })
         
         app.get("/spots/new", (req, res) => {
-            res.render('new.ejs')
+            res.render('spots/new.ejs')
         });
         
         app.get("/spots/:id", (req, res) => {
             Spot.findById(req.params.id).populate("comments").exec((err, spot) => {
                 if (err) { console.log(err) }
                 else { 
-                    res.render("show", {spot})}
+                    res.render("spots/show", { spot })}
             })
         })
+
+        app.get("/spots/:id/comments/new", (req, res) => {
+            Spot.findById(req.params.id, (err, spot) => {
+                if ( err ) {console.log(err)}
+                else {
+                    res.render("comments/new", { spot })
+                }
+            })
+        })
+
+        app.post("/spots/:id/comments", (req, res) => {
+            Spot.findById(req.params.id, (err, spot) => {
+                if( err ) {res.send('Database error 🥺')}
+                else {
+                    console.log(req.body.comment)
+                    Comment.create(req.body.comment, (err, comment) => {
+                        if ( err ) { console.log(err) }
+                        else {
+                            spot.comments.push(comment);
+                            spot.save()
+                            res.redirect('/spots/' + spot._id);
+                        }
+                    })
+                }
+            })
+        })
+
+
 
 
         app.listen(process.env.PORT || port, () => console.log(`server running on ${port}`))
