@@ -9,7 +9,6 @@ const   express     = require('express'),
 
     //seed database/
     
-    
     // ****************************
     //          Database Connection 
     // ****************************
@@ -18,17 +17,22 @@ const   express     = require('express'),
     mongoose.set('useFindAndModify', false)
     // seedDB();
     
-    
+
+    // ****************************
+    //      Middleware
+    // ****************************
+    app.use(bodyParser.urlencoded({extende: true}));
+    app.set("view engine", "ejs");
+    app.use(express.static('public'))
     
         // ****************************
         //      Routes
         // ****************************
-        app.use(bodyParser.urlencoded({extende: true}));
-        app.set("view engine", "ejs")
         
-        app.get("/", (req, res) => {
-            res.render("landing");
-        });
+        
+    app.get("/", (req, res) => {
+        res.render("landing");
+    });
         
         
         

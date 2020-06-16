@@ -13,7 +13,7 @@
         <div class="col-md-9">
             <div class="card">
                  <img class="img-responsive" width='300px' src="<%= spot.image %>">
-                 <div class="figure-caption">
+                 <div class="figure-caption caption-full">
                      <h4 class="float-sm-right">Fee/Coffee $2.15</h4>
                      <div>
                         <h4 style="text-align: left;"><a href="/"><%= spot.name %></a></h4>
@@ -21,14 +21,14 @@
                     </div>
                     </div>
         </div>
-        <div class="card" style="padding: 10px 10px; background-color:rgb(210, 219, 219);">
+        <div class="card" );">
             <div class="text-right">
-                <a class="btn btn-primary" href="<%= spot._id %>/comments/new">Add Comment</a>
+                <a class="btn btn-primary" href="<%= spot._id %>/comments/new"> + Comment</a>
                 <hr>
             </div>
         
             <% spot.comments.forEach(comment => { %>
-                <div class= "row">
+                <div class= "row comment">
                     <div class="col-md-12">
                         <strong> <%= comment.author %> </strong>  
                         <span class="float-sm-right">10 days ago</span>

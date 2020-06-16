@@ -14,8 +14,8 @@
    <div class='row text-center' style="display:flex; flex-wrap: wrap">
       <% spots.forEach((spot) => { %>
        <div class="col-md-3 col-sm-6">
-         <div class="card" style="width: 18rem;">
-            <img  width='300px' src="<%= spot.image %>">
+         <div class="card">
+            <img src="<%= spot.image %>">
             <div class="card-body">
                <h5 class="card-title"><%= spot.name %></h5>
                <a href="/spots/<%= spot._id %>" class="btn btn-primary">Details</a>

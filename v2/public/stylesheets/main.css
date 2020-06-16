@@ -1,0 +1,26 @@
+body {
+    background-color:lavender;
+}
+
+.card img {
+    width: 100%;
+}
+
+.card {
+    padding: 0;
+    margin: 9px;
+}
+
+.card .caption-full {
+    padding: 9px;
+}
+
+.card .btn {
+    margin-top: 9px;
+    margin-right: 9px;
+
+}
+
+.comment {
+    margin: 9px;
+}
