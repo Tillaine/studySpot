@@ -1,6 +1,6 @@
 # studySpot
 
-
+![Imgur](https://i.imgur.com/yFafsHSm.png)
 
 ## Built With
 View/ejs > front-end
@@ -9,6 +9,7 @@ express >server
 mongoDB > database
 mongoose > connection
 Bootstrap > styling
+Passport> Authentication
 ## Getting Started
 Ensure that you have node installed
 Create a mongo database called spots
