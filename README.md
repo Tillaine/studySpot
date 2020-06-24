@@ -1,6 +1,6 @@
 # studySpot
 
-![Imgur](https://i.imgur.com/yFafsHSm.png)
+![Imgur](https://i.imgur.com/yFafsHS.png)
 
 ## Built With
 View/ejs > front-end
