@@ -18,10 +18,13 @@
                      <div>
                         <h4 style="text-align: left;"><a href="/"><%= spot.name %></a></h4>
                             <p> <%= spot.description %>  </p>
+                            <p> 
+                                <em> Submitted by: <%= spot.author.username %> </em>
+                            </p>
                     </div>
                     </div>
         </div>
-        <div class="card" );">
+        <div class="card">
             <div class="text-right">
                 <a class="btn btn-primary" href="<%= spot._id %>/comments/new"> + Comment</a>
                 <hr>
@@ -30,7 +33,7 @@
             <% spot.comments.forEach(comment => { %>
                 <div class= "row comment">
                     <div class="col-md-12">
-                        <strong> <%= comment.author %> </strong>  
+                        <strong> <%= comment.author.username %> </strong>  
                         <span class="float-sm-right">10 days ago</span>
                         <p>
                             <%= comment.text %>

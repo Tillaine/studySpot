@@ -2,6 +2,8 @@ const   express = require("express"),
         router = express.Router(),
         passport = require("passport"),
         User     = require("../models/Users");
+
+//middleware 
 const isLoggedIn = (req, res, next) => {
     if( req.isAuthenticated() ) {
         return next();

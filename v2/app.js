@@ -14,7 +14,6 @@ const   commentRoutes = require("./routes/comments"),
         spotRoutes = require("./routes/spots"), 
         authRoutes = require("./routes/index");
 
-
     // ****************************
     // Passport (Authentication) Configuration 
     // ****************************
@@ -36,7 +35,9 @@ const   commentRoutes = require("./routes/comments"),
     mongoose.connect('mongodb://localhost:27017/spots', { useNewUrlParser: true, useUnifiedTopology: true });
     const connection = mongoose.connection;
     mongoose.set('useFindAndModify', false)
-    // seedDB();
+
+    //Seed Database ********
+    seedDB();
     
 
     // ****************************
@@ -49,12 +50,7 @@ const   commentRoutes = require("./routes/comments"),
         res.locals.user = req.user;
         next();
     })
-    const isLoggedIn = (req, res, next) => {
-        if( req.isAuthenticated() ) {
-            return next();
-        }
-        res.redirect("/login");
-    }
+
 
     // ****************************
     //      Routes
@@ -64,12 +60,8 @@ const   commentRoutes = require("./routes/comments"),
     app.use("/spots/:id/comments", commentRoutes);
     app.use("/spots", spotRoutes);
     
-    
-        
-        
-    
 
-        app.listen(process.env.PORT || port, () => console.log(`server running on ${port}`))
+    app.listen(process.env.PORT || port, () => console.log(`server running on ${port}`))
        
        
        

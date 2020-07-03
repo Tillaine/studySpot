@@ -2,6 +2,13 @@ const   express = require("express"),
         router = express.Router(),
         Spot   = require("../models/Spot");
     
+//middleware 
+const isLoggedIn = (req, res, next) => {
+    if( req.isAuthenticated() ) {
+        return next();
+    }
+    res.redirect("/login");
+}
 
 //Spots
 router.get("/", (req, res) => {
@@ -14,9 +21,13 @@ router.get("/", (req, res) => {
 } )
     
 //New Spot   
-    router.post("/", (req, res) => {
+    router.post("/", isLoggedIn, (req, res) => {
         const { name, image, description } = req.body
-        var newSpot = {name, image, description}
+        const author = {
+            id: req.user._id,
+            username: req.user.username
+        }
+        var newSpot = {name, image, description, author}
         Spot.create(newSpot, (err, freshSpot) => {
             if (err) { console.log(err) }
             else { console.log(freshSpot)}
@@ -25,7 +36,7 @@ router.get("/", (req, res) => {
      
     })
 
-    router.get("/new", (req, res) => {
+    router.get("/new", isLoggedIn, (req, res) => {
         res.render('spots/new.ejs')
     });
     

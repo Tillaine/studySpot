@@ -39,36 +39,36 @@ function seedDB(){
             console.log(err);
         }
         console.log("removed Spots!");
-        Comment.remove({}, function(err) {
-            if(err){
-                console.log(err);
-            }
-            console.log("removed comments!");
+        // Comment.remove({}, function(err) {
+            // if(err){
+            //     console.log(err);
+            // }
+            // console.log("removed comments!");
              //add a few Spots
-            data.forEach(function(seed){
-                Spot.create(seed, function(err, spot){
-                    if(err){
-                        console.log(err)
-                    } else {
-                        console.log("added a Spot");
-                        //create a comment
-                        Comment.create(
-                            {
-                                text: "This place is great, but internet is spoty",
-                                author: "Bit"
-                            }, function(err, comment){
-                                if(err){
-                                    console.log(err);
-                                } else {
-                                    spot.comments.push(comment);
-                                    spot.save();
-                                    console.log("Created new comment");
-                                }
-                            });
-                    }
-                });
-            });
-        });
+        //     data.forEach(function(seed){
+        //         Spot.create(seed, function(err, spot){
+        //             if(err){
+        //                 console.log(err)
+        //             } else {
+        //                 console.log("added a Spot");
+        //                 //create a comment
+        //                 Comment.create(
+        //                     {
+        //                         text: "This place is great, but internet is spoty",
+        //                         author: "Bit"
+        //                     }, function(err, comment){
+        //                         if(err){
+        //                             console.log(err);
+        //                         } else {
+        //                             spot.comments.push(comment);
+        //                             spot.save();
+        //                             console.log("Created new comment");
+        //                         }
+        //                     });
+        //             }
+        //         });
+        //     });
+        // });
     }); 
     //add a few comments
 }
