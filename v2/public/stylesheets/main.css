@@ -24,3 +24,8 @@ body {
 .comment {
     margin: 9px;
 }
+
+.navbar-right {
+    float: right;
+    text-align: right;
+}

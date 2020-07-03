@@ -4,10 +4,31 @@ const   express     = require('express'),
         bodyParser  = require('body-parser'),
         mongoose    = require("mongoose"),
         Spot        = require("./models/Spot");
-        Comment = require("./models/comment")
-        seedDB      = require("./seed") 
+        passport    = require("passport"),
+        LocalStrategy = require("passport-local"),
+        Comment     = require("./models/comment"),
+        seedDB      = require("./seed"), 
+        User        = require("./models/Users");
+// routes 
+const   commentRoutes = require("./routes/comments"), 
+        spotRoutes = require("./routes/spots"), 
+        authRoutes = require("./routes/index");
 
-    //seed database/
+
+    // ****************************
+    // Passport (Authentication) Configuration 
+    // ****************************
+   app.use(require("express-session")({
+       secret: 'do you want to win at capitalism?',
+       resave: false,
+       saveUninitialized: false
+   }));
+
+   app.use(passport.initialize());
+   app.use(passport.session());
+   passport.use(new LocalStrategy(User.authenticate()));
+   passport.serializeUser(User.serializeUser());
+   passport.deserializeUser(User.deserializeUser());
     
     // ****************************
     //          Database Connection 
@@ -24,80 +45,29 @@ const   express     = require('express'),
     app.use(bodyParser.urlencoded({extende: true}));
     app.set("view engine", "ejs");
     app.use(express.static('public'))
+    app.use((req, res, next) => {
+        res.locals.user = req.user;
+        next();
+    })
+    const isLoggedIn = (req, res, next) => {
+        if( req.isAuthenticated() ) {
+            return next();
+        }
+        res.redirect("/login");
+    }
+
+    // ****************************
+    //      Routes
+    // ****************************
+
+    app.use("/", authRoutes);
+    app.use("/spots/:id/comments", commentRoutes);
+    app.use("/spots", spotRoutes);
     
-        // ****************************
-        //      Routes
-        // ****************************
+    
         
         
-    app.get("/", (req, res) => {
-        res.render("landing");
-    });
-        
-        
-        
-        
-        app.get("/spots", (req, res) => {
-            Spot.find((err, spots) => {
-                if (err) { console.log(err) }
-                else {
-                    res.render('spots/index', { spots })
-                }
-            })
-        } )
-        
-        
-        app.post("/spots", (req, res) => {
-            const { name, image, description } = req.body
-            var newSpot = {name, image, description}
-            Spot.create(newSpot, (err, freshSpot) => {
-                if (err) { console.log(err) }
-                else { console.log(freshSpot)}
-                res.redirect('/spots')
-            })
-         
-        })
-        
-        app.get("/spots/new", (req, res) => {
-            res.render('spots/new.ejs')
-        });
-        
-        app.get("/spots/:id", (req, res) => {
-            Spot.findById(req.params.id).populate("comments").exec((err, spot) => {
-                if (err) { console.log(err) }
-                else { 
-                    res.render("spots/show", { spot })}
-            })
-        })
-
-        app.get("/spots/:id/comments/new", (req, res) => {
-            Spot.findById(req.params.id, (err, spot) => {
-                if ( err ) {console.log(err)}
-                else {
-                    res.render("comments/new", { spot })
-                }
-            })
-        })
-
-        app.post("/spots/:id/comments", (req, res) => {
-            Spot.findById(req.params.id, (err, spot) => {
-                if( err ) {res.send('Database error 🥺')}
-                else {
-                    console.log(req.body.comment)
-                    Comment.create(req.body.comment, (err, comment) => {
-                        if ( err ) { console.log(err) }
-                        else {
-                            spot.comments.push(comment);
-                            spot.save()
-                            res.redirect('/spots/' + spot._id);
-                        }
-                    })
-                }
-            })
-        })
-
-
-
+    
 
         app.listen(process.env.PORT || port, () => console.log(`server running on ${port}`))
        
