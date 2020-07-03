@@ -18,19 +18,26 @@
                      <div>
                         <h4 style="text-align: left;"><a href="/"><%= spot.name %></a></h4>
                             <p> <%= spot.description %>  </p>
+                            <p> 
+                                <em> Submitted by: <%= spot.author.username %> </em>
+                            </p>
+                            <a class="btn btn-sm btn-warning" href="/spots/<%= spot._id %>/edit">✎ Edit</a>
+                            <form id='delete-form' action="/spots/<%= spot._id %>/?_method=DELETE" method="POST">
+                                <button class="btn btn-danger btn-sm float-right">Delete ✖︎ </button>
+                            </form>
                     </div>
                     </div>
         </div>
-        <div class="card" );">
+        <div class="card">
             <div class="text-right">
                 <a class="btn btn-primary" href="<%= spot._id %>/comments/new"> + Comment</a>
-                <hr>
+                
             </div>
         
             <% spot.comments.forEach(comment => { %>
                 <div class= "row comment">
                     <div class="col-md-12">
-                        <strong> <%= comment.author %> </strong>  
+                        <strong> <%= comment.author.username %> </strong>  
                         <span class="float-sm-right">10 days ago</span>
                         <p>
                             <%= comment.text %>
