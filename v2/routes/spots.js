@@ -1,3 +1,5 @@
+const { findByIdAndUpdate } = require("../models/Spot");
+
 const   express = require("express"),
         router = express.Router(),
         Spot   = require("../models/Spot");
@@ -39,7 +41,35 @@ router.get("/", (req, res) => {
     router.get("/new", isLoggedIn, (req, res) => {
         res.render('spots/new.ejs')
     });
+
+//Edit Spot Form
+
+router.get("/:id/edit", (req, res) => {
+    console.log(req.params.id)
+    Spot.findById(req.params.id, (err, foundSpot) => {
+        if ( err ) { 
+            console.log(err) 
+            res.redirect('/spots')}
+        else {
+            res.render("spots/edit", { spot: foundSpot })
+        }
+    })
+})
+
+
+//update Spot
     
+router.put("/:id", ( req, res ) => {
+    Spot.findByIdAndUpdate(req.params.id, req.body.spot, (err, updatedSpot) => {
+        if( err ) { 
+            console.log( err )
+            res.redirect('/spots')
+        }
+        else {
+            res.redirect('/spots/' + req.params.id)
+        }
+    })
+})
 //Spot Details 
     router.get("/:id", (req, res) => {
         Spot.findById(req.params.id).populate("comments").exec((err, spot) => {
@@ -48,5 +78,17 @@ router.get("/", (req, res) => {
                 res.render("spots/show", { spot })}
         })
     })
+
+// Destroy Spot Route
+router.delete('/:id', (req, res) => {
+    Spot.findByIdAndRemove(req.params.id, (err) => {
+        if ( err ) {
+            console.log(err)
+            res.redirect('/spots')
+        } else {
+            res.redirect('/spots')
+        }
+    })
+})
 
     module.exports = router;

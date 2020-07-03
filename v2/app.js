@@ -8,6 +8,7 @@ const   express     = require('express'),
         LocalStrategy = require("passport-local"),
         Comment     = require("./models/comment"),
         seedDB      = require("./seed"), 
+        methodOverride = require("method-override")
         User        = require("./models/Users");
 // routes 
 const   commentRoutes = require("./routes/comments"), 
@@ -25,6 +26,7 @@ const   commentRoutes = require("./routes/comments"),
 
    app.use(passport.initialize());
    app.use(passport.session());
+   app.use(methodOverride("_method"));
    passport.use(new LocalStrategy(User.authenticate()));
    passport.serializeUser(User.serializeUser());
    passport.deserializeUser(User.deserializeUser());
@@ -37,7 +39,7 @@ const   commentRoutes = require("./routes/comments"),
     mongoose.set('useFindAndModify', false)
 
     //Seed Database ********
-    seedDB();
+    // seedDB();
     
 
     // ****************************
