@@ -25,11 +25,16 @@ body {
     margin: 9px;
 }
 
+.commentBox {
+    margin-bottom: 9px;
+    padding-bottom: 9px;
+}
+
 .navbar-right {
     float: right;
     text-align: right;
 }
 
-#delete-form {
+.delete-form {
     display: inline;
 }
