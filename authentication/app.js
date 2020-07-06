@@ -5,8 +5,8 @@ const    express  = require("express"),
          bodyParser = require("body-parser"),
          mongoose = require("mongoose"),
          LocalStrategy = require("passport-local"),
-         passpostLocalMongoose = require("passport-local-mongoose");
-         User = require("./models/users.js")
+         passpostLocalMongoose = require("passport-local-mongoose"),
+         User = require("./models/users.js"),
          app = express();
 
 
