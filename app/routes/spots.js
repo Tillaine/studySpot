@@ -1,36 +1,10 @@
 const { findByIdAndUpdate } = require("../models/Spot");
+const middlewareObj = require("../middleware");
 
 const   express = require("express"),
         router = express.Router(),
-        Spot   = require("../models/Spot");
-// ***********************    
-//middleware 
-// ***********************    
-const isLoggedIn = (req, res, next) => {
-    if( req.isAuthenticated() ) {
-        return next();
-    }
-    res.redirect("/login");
-}
-
-const checkSpotOwnership = (req, res, next) => {
-    if(req.isAuthenticated()) {
-        Spot.findById(req.params.id, (err, foundSpot) => {
-            if ( err ) { 
-                console.log(err) 
-                res.redirect('back')}
-            else {
-                if (foundSpot.author.id.equals(req.user._id)) {
-                   next();
-                } else {
-                    res.redirect('back')
-                }
-            }
-        });
-    } else {
-        res.redirect('back')
-    }
-}
+        Spot   = require("../models/Spot"),
+        middleware = require('../middleware'); 
 
 //Spots
 router.get("/", (req, res) => {
@@ -43,7 +17,7 @@ router.get("/", (req, res) => {
 } )
     
 //New Spot   
-    router.post("/", isLoggedIn, (req, res) => {
+    router.post("/", middleware.isLoggedIn, (req, res) => {
         const { name, image, description } = req.body
         const author = {
             id: req.user._id,
@@ -58,13 +32,13 @@ router.get("/", (req, res) => {
      
     })
 
-    router.get("/new", isLoggedIn, (req, res) => {
+    router.get("/new", middleware.isLoggedIn, (req, res) => {
         res.render('spots/new.ejs')
     });
 
 //Edit Spot Form
 
-router.get("/:id/edit",  checkSpotOwnership, (req, res) => {
+router.get("/:id/edit", middleware.checkSpotOwnership, (req, res) => {
         Spot.findById(req.params.id, (err, foundSpot) => {
             if ( err ) { 
                 console.log(err) 
@@ -79,7 +53,7 @@ router.get("/:id/edit",  checkSpotOwnership, (req, res) => {
 
 //update Spot
     
-router.put("/:id",  checkSpotOwnership, ( req, res ) => {
+router.put("/:id", middleware.checkSpotOwnership, ( req, res ) => {
     Spot.findByIdAndUpdate(req.params.id, req.body.spot, (err, updatedSpot) => {
         if( err ) { 
             console.log( err )
@@ -100,7 +74,7 @@ router.put("/:id",  checkSpotOwnership, ( req, res ) => {
     })
 
 // Destroy Spot Route
-router.delete('/:id',  checkSpotOwnership, (req, res) => {
+router.delete('/:id', middleware.checkSpotOwnership, (req, res) => {
     Spot.findByIdAndRemove(req.params.id, (err) => {
         if ( err ) {
             console.log(err)
